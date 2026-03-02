@@ -17,9 +17,8 @@ Automated script for checking the passport creating status
 ```
 
 ## 🚀 Features
-- 🔐 Login via Xsolla iframe authentication
-- 🎁 Automatically claim available free rewards
-- 📲 Sends success/failure notifications to Telegram
+- 🔐 Automation check the status of the passport
+- 📲 Sends notification to Telegram
 - 🌐 Supports local and Railway environments
 
 ## 🛠️ Tech Stack

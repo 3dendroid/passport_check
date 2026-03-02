@@ -1,11 +1,5 @@
 [phases.setup]
-aptPkgs = ["chromium", "chromium-driver"]
+nixPkgs = ["...", "google-chrome", "chromium"]
 
-[phases.install]
+[phases.build]
 cmds = ["pip install -r requirements.txt"]
-
-[phases.start]
-cmd = "python bot.py"
-
-[nixpacks]
-packages = ["chromium", "chromedriver", "google-chrome"]
