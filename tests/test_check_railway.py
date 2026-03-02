@@ -2,6 +2,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 
+from pages.main_page import MainPage
+from utilities.telegram_notifier import send_telegram_message
+
 
 def create_driver():
     options = Options()
@@ -37,3 +40,27 @@ def create_driver():
     })
 
     return driver
+
+def test_pass_check():
+    send_telegram_message("🪪 *Checking passport status, please wait.*")
+
+    driver = create_driver()
+    try:
+        mp = MainPage(driver)
+        status_text, id_text, date_text = mp.check_pass_status()
+        send_telegram_message(f"✅️ *Checking completed!*\n"
+                              f"🕒 *Documents submitted:* {id_text}\n"
+                              f"📆 *Application ID:* {date_text}\n"
+                              f"📋 *Passport state:* {status_text}"
+                              )
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        send_telegram_message(f"❌ *Error:* {e}")
+    finally:
+        # Используем quit(), чтобы закрыть все окна и завершить процесс драйвера
+        driver.quit()
+
+
+# Обязательный блок для запуска скрипта
+if __name__ == "__main__":
+    test_pass_check()
