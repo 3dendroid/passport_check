@@ -1,4 +1,3 @@
-import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -14,19 +13,16 @@ def create_driver():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
 
-    # Путь для Railway (Nixpacks)
+    # Railway Path (Nixpacks)
     options.binary_location = "/usr/bin/chromium"
 
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
     options.add_experimental_option('useAutomationExtension', False)
 
-    # В Railway (Nixpacks) chromedriver обычно находится в PATH автоматически.
-    # Если мы просто создадим драйвер, Selenium 4 сам его найдет.
     try:
         driver = webdriver.Chrome(options=options)
     except:
-        # Если не нашел сам, пробуем указать путь
         service = Service(executable_path="/usr/bin/chromedriver")
         driver = webdriver.Chrome(service=service, options=options)
 
@@ -40,7 +36,7 @@ def test_pass_check():
         mp = MainPage(driver)
         status_text, id_text, date_text = mp.check_pass_status()
 
-        # Отправляем сообщение ТОЛЬКО при успехе
+        # Send message in telegram
         send_telegram_message(
             f"✅️ *Checking completed!*\n"
             f"🕒 *Documents submitted:* {id_text}\n"
@@ -48,7 +44,6 @@ def test_pass_check():
             f"📋 *Passport state:* {status_text}"
         )
     except Exception:
-        # Если произошла ошибка, мы НИЧЕГО не пишем в Telegram и не принтим в консоль
         pass
     finally:
         if driver:
