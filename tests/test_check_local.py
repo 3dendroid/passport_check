@@ -48,12 +48,16 @@ def test_pass_check():
     driver = create_driver()
     try:
         mp = MainPage(driver)
-        status_text, id_text, date_text = mp.check_pass_status()
-        send_telegram_message(f"✅️ *Checking completed!*\n"
-                              f"🕒 *Documents submitted:* {id_text}\n"
-                              f"📆 *Application ID:* {date_text}\n"
-                              f"📋 *Passport state:* {status_text}"
-                              )
+        status_text, id_text, date_text, percent_text = mp.check_pass_status()
+
+        # Send message in telegram
+        send_telegram_message(
+            f"✅️ *Checking completed!*\n"
+            f"🕒 *Documents submitted:* {id_text}\n"
+            f"📆 *Application ID:* {date_text}\n"
+            f"📋 *Passport state:* {status_text}\n"
+            f"📊 *Percents:* {percent_text}"
+        )
     except Exception as e:
         print(f"Error occurred: {e}")
         send_telegram_message(f"❌ *Error:* {e}")
