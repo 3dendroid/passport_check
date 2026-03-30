@@ -42,7 +42,7 @@ def test_pass_check():
             f"🕒 *Documents submitted:* {id_text}\n"
             f"📆 *Application ID:* {date_text}\n"
             f"📋 *Passport state:* {status_text}\n"
-            f"📊 *Percents:* {percent_text}"
+            f"📊 *Percentages:* {percent_text}"
         )
     except Exception:
         pass
