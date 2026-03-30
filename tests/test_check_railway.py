@@ -34,14 +34,15 @@ def test_pass_check():
     try:
         driver = create_driver()
         mp = MainPage(driver)
-        status_text, id_text, date_text = mp.check_pass_status()
+        status_text, id_text, date_text, percent_text = mp.check_pass_status()
 
         # Send message in telegram
         send_telegram_message(
             f"✅️ *Checking completed!*\n"
             f"🕒 *Documents submitted:* {id_text}\n"
             f"📆 *Application ID:* {date_text}\n"
-            f"📋 *Passport state:* {status_text}"
+            f"📋 *Passport state:* {status_text}\n"
+            f"📊 *Percents:* {percent}%"
         )
     except Exception:
         pass

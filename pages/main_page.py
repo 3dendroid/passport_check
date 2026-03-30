@@ -25,6 +25,7 @@ class MainPage(Base):
     date = "//span[@class='data-block-day']"
     id = "//span[@class='data-block-id']"
     pass_status = "//span[@class='data-block-stat']"
+    percent = "//div[@id='progress']"
 
     # GETTERS
     def wait_for_element(self, xpath, timeout=20):
@@ -59,6 +60,9 @@ class MainPage(Base):
     def get_id(self):
         return self.wait_for_element(self.id)
 
+    def get_percent(self):
+        return self.wait_for_element(self.percent)
+
     # ACTIONS
     def open_page(self):
         self.driver.get(self.url)
@@ -86,6 +90,17 @@ class MainPage(Base):
     def id_text(self):
         return self.get_id().text
 
+    def percent_text(self):
+        return self.get_percent().text
+
+    def percent_text(self):
+        element = self.get_percent()
+        classes = element.get_attribute("class").split()
+        for cls in classes:
+            if cls.startswith("procent-"):
+                return cls.replace("procent-", "") + "%"
+        return None
+
     # MAIN METHODS
     def check_pass_status(self):
         self.open_page()
@@ -94,4 +109,4 @@ class MainPage(Base):
         self.input_number(2000493022026011300194396)
         self.button_click()
         time.sleep(3)
-        return self.status_text(), self.date_text(), self.id_text()
+        return self.status_text(), self.date_text(), self.id_text(), self.percent_text()
